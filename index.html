@@ -1,48 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <Link>
-        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" 
-        rel="stylesheet">
-    </Link>
-  </head>
-  <body class="bg-pink-300">
-      <div
-          class="min-h-screen container mx-auto flex flex-col items-center justify-center"
-      >
-      <div class="title">
-          <h1 class="text-6xl font-light-bold my-4">My Weekly To Do List</h1>
-      </div>
-      <div class="form w-full my-8">
-          <form id="addForm" class="flex">
-              <input
-              id="newTodo"
-              type="text" 
-              class="flex-grow px-4 rounded-l-lg"
-              placeholder="New Todo" 
-            />
-              <button 
-                class="bg-yellow-400 text-white py-2 px-4 rounded-r-lg hover:bg-green-700"
-              >
-                  Add
-                </button>
-          </form>
-        </div>
-      <div id="todos" class="w-2/3 space-y-8 my-4">
-    <div>
-        <h3 class="text-2xl text-yellow-600">Goals</h3>
-        <ul id="pendingList" class="space-y-4"></ul>
+    <title>Inventory</title>
+    <link 
+    href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" 
+    rel="stylesheet"
+    />
+</head>
+<body class="bg-gray-200">
+    <div id="app">
+    <h1 id="title" class="text-2xl text-center text-blue-900">{{title}}</h1>
+    <h3 class="text-xl text-center text-blue-800">
+        Total Inventory: {{total}}
+    </h3>
+    <div class="flex flex-col">
+     <input
+        placeholder="New Product"
+        type="text"
+        class="rounded p-2 w-10/12 mx-auto mt-4"
+        v-model="newProduct"
+        @change="addProduct"
+    />
+    <ul>
+        <li
+        v-for="product in products"
+        class="bg-white w-10/12 mx-auto mt-2 py-2 px-2 text-gray-900 rounded shadow"
+        >
+        <span v-if="product.qty == 0" class="text-xs font-bold text-red-800"
+            >Out of Stock!</span>
+        <span v-else>{{product.qty}}</span> - {{product.name}}
+        <button
+        class="bg-green-500 ml-10 px-4 text-white rounded hover:bg-green-700"
+        @click="product.qty++"
+        >
+        +
+        </button>
+        <button
+        v-show="product.qty>0"
+        class="bg-red-500 ml-10 px-4 text-white rounded hover:bg-red-700"
+        @click="product.qty--"
+        >
+        -
+    </button>
+    </ul>
     </div>
-    <div>
-    <h3 class="text-2xl text-purple-500">Accomplished</h3>
-    <ul id="completedList" class="space-y-4"></ul>
-    </div>
-</div> 
-</div>
-</div>
-    <script src="app.js"></script>
-  </body>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="main.js"></script>
+</body>
 </html>
